@@ -5,6 +5,14 @@ import * as ProgressPrimitive from "@radix-ui/react-progress"
 
 import { cn } from "@workspace/ui/lib/utils"
 
+/**
+ * Renders a customizable progress bar using Radix UI primitives.
+ *
+ * Displays a horizontal bar indicating progress as a filled portion, with the fill determined by the `value` prop (0–100). Additional styling can be applied via the `className` prop.
+ *
+ * @param value - The progress percentage to display (0–100). Defaults to 0 if not provided.
+ * @returns A styled progress bar component reflecting the current progress.
+ */
 function Progress({
   className,
   value,

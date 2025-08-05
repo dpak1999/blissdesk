@@ -6,28 +6,47 @@ import { XIcon } from "lucide-react"
 
 import { cn } from "@workspace/ui/lib/utils"
 
+/**
+ * Root component for the Sheet UI, providing the container for the sliding panel and its state.
+ */
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />
 }
 
+/**
+ * Renders an element that triggers the opening of the sheet when interacted with.
+ */
 function SheetTrigger({
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Trigger>) {
   return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />
 }
 
+/**
+ * Renders a button or element that closes the sheet when activated.
+ *
+ * Forwards all props to the underlying close primitive and adds a `data-slot="sheet-close"` attribute for identification.
+ */
 function SheetClose({
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Close>) {
   return <SheetPrimitive.Close data-slot="sheet-close" {...props} />
 }
 
+/**
+ * Renders the sheet content in a React portal, enabling it to appear outside the normal DOM hierarchy.
+ */
 function SheetPortal({
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Portal>) {
   return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />
 }
 
+/**
+ * Renders a semi-transparent overlay behind the sheet, applying fade-in and fade-out animations based on the sheet's open state.
+ *
+ * Additional class names and props are forwarded to the underlying overlay element.
+ */
 function SheetOverlay({
   className,
   ...props
@@ -44,6 +63,12 @@ function SheetOverlay({
   )
 }
 
+/**
+ * Renders the main content area of the sheet, including overlay, slide-in animation, and a close button.
+ *
+ * @param side - The edge of the screen from which the sheet appears ("top", "right", "bottom", or "left"). Defaults to "right".
+ * @returns The sheet content with appropriate positioning, animation, and accessibility features.
+ */
 function SheetContent({
   className,
   children,
@@ -81,6 +106,11 @@ function SheetContent({
   )
 }
 
+/**
+ * Renders the header section of a sheet with vertical spacing and padding.
+ *
+ * Forwards additional props and class names to the underlying `div`.
+ */
 function SheetHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -91,6 +121,11 @@ function SheetHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Renders the footer section of a sheet, typically used for actions or controls at the bottom.
+ *
+ * Applies padding, vertical spacing, and positions itself at the bottom of the sheet content.
+ */
 function SheetFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -101,6 +136,11 @@ function SheetFooter({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Renders the sheet's title with emphasized font styling.
+ *
+ * Forwards all props to the underlying primitive and applies a `data-slot` attribute for identification.
+ */
 function SheetTitle({
   className,
   ...props
@@ -114,6 +154,11 @@ function SheetTitle({
   )
 }
 
+/**
+ * Renders descriptive text within a sheet, styled with muted foreground and small font size.
+ *
+ * Forwards all additional props to the underlying Radix UI Description primitive.
+ */
 function SheetDescription({
   className,
   ...props

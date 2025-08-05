@@ -25,6 +25,14 @@ const badgeVariants = cva(
   }
 )
 
+/**
+ * Renders a styled badge element with customizable appearance and element type.
+ *
+ * Supports multiple visual variants and can render as either a `span` or as a child component using Radix UI's Slot. Additional props are forwarded to the rendered element.
+ *
+ * @param variant - The visual style variant of the badge (`default`, `secondary`, `destructive`, or `outline`)
+ * @param asChild - If true, renders the badge as a child component using Slot instead of a `span`
+ */
 function Badge({
   className,
   variant,

@@ -5,6 +5,14 @@ import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
 
 import { cn } from "@workspace/ui/lib/utils"
 
+/**
+ * Renders a customizable scrollable container with styled viewport and scrollbar.
+ *
+ * Wraps Radix UI's scroll area primitives to provide a scrollable area with consistent styling and accessibility features. Children are rendered inside the scrollable viewport.
+ *
+ * @param className - Additional class names to apply to the scroll area container
+ * @param children - Elements to display within the scrollable viewport
+ */
 function ScrollArea({
   className,
   children,
@@ -28,6 +36,13 @@ function ScrollArea({
   )
 }
 
+/**
+ * Renders a styled scrollbar for a scroll area, supporting vertical or horizontal orientation.
+ *
+ * Applies conditional styling based on the orientation and includes a draggable thumb element.
+ *
+ * @param orientation - The scrollbar orientation, either "vertical" or "horizontal". Defaults to "vertical".
+ */
 function ScrollBar({
   className,
   orientation = "vertical",

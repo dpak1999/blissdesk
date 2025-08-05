@@ -6,9 +6,7 @@ import { Button } from "@workspace/ui/components/button";
 import { useMutation } from "convex/react";
 
 /**
- * Renders a centered page with a label, user profile button, and organization switcher.
- *
- * Displays the text "apps/web", a user profile button, and an organization switcher with the personal organization option hidden.
+ * Displays a centered page with a label, user profile button, organization switcher, and an "Add" button that triggers a user addition mutation.
  */
 export default function Page() {
   const addUser = useMutation(api.users.add);

@@ -5,6 +5,11 @@ import * as LabelPrimitive from "@radix-ui/react-label"
 
 import { cn } from "@workspace/ui/lib/utils"
 
+/**
+ * Renders a styled label component with support for disabled and peer-disabled states.
+ *
+ * Combines default utility classes for layout and typography with any additional classes provided via the `className` prop.
+ */
 function Label({
   className,
   ...props

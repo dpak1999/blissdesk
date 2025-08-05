@@ -5,6 +5,17 @@ import * as SliderPrimitive from "@radix-ui/react-slider"
 
 import { cn } from "@workspace/ui/lib/utils"
 
+/**
+ * A customizable slider component supporting single or range selection, built on top of Radix UI's slider primitive.
+ *
+ * Accepts all standard slider root props, including support for horizontal and vertical orientation, disabled state, and custom styling. Renders one or more thumbs based on the provided `value` or `defaultValue` arrays, defaulting to a range between `min` and `max` if not specified.
+ *
+ * @param className - Additional CSS classes to apply to the slider root element
+ * @param defaultValue - The initial value(s) of the slider if uncontrolled
+ * @param value - The controlled value(s) of the slider
+ * @param min - The minimum allowed value (defaults to 0)
+ * @param max - The maximum allowed value (defaults to 100)
+ */
 function Slider({
   className,
   defaultValue,
