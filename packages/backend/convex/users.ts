@@ -16,6 +16,13 @@ export const add = mutation({
       throw new Error("Unauthorized: User identity is null");
     }
 
+    const orgId = identity.orgId as string;
+    if (!orgId) {
+      throw new Error("Unauthorized: Organization ID is missing");
+    }
+
+    throw new Error("This is a test error");
+
     const userId = await ctx.db.insert("users", {
       name: "Deepak new",
     });
