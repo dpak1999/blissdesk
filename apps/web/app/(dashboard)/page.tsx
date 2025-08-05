@@ -3,9 +3,9 @@
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 
 /**
- * Renders a page that displays user data and allows adding users when authenticated, or prompts for sign-in when unauthenticated.
+ * Renders a centered page with a label, user profile button, and organization switcher.
  *
- * Shows a user profile button, a list of users, and an "Add" button for authenticated users. Unauthenticated users are prompted to log in.
+ * Displays the text "apps/web", a user profile button, and an organization switcher with the personal organization option hidden.
  */
 export default function Page() {
   return (
