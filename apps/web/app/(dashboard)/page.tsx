@@ -14,7 +14,7 @@ export default function Page() {
   const addUser = useMutation(api.users.add);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-svh">
+    <div className="flex flex-col items-center justify-center min-h-screen min-w-screen h-full">
       <p>apps/web</p>
       <UserButton />
       <OrganizationSwitcher hidePersonal />
