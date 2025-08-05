@@ -8,6 +8,11 @@ import {
 import { cn } from "@workspace/ui/lib/utils"
 import { Button, buttonVariants } from "@workspace/ui/components/button"
 
+/**
+ * Renders a navigation container for pagination controls with appropriate ARIA roles and labels.
+ *
+ * Combines default and custom class names for layout and centering. Additional props are spread onto the `<nav>` element.
+ */
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
     <nav
@@ -20,6 +25,11 @@ function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   )
 }
 
+/**
+ * Renders a flex container for pagination items within a pagination UI.
+ *
+ * Accepts additional props and class names for customization.
+ */
 function PaginationContent({
   className,
   ...props
@@ -33,6 +43,11 @@ function PaginationContent({
   )
 }
 
+/**
+ * Renders a list item for use within pagination controls.
+ *
+ * Spreads all received props onto the `<li>` element and adds a data attribute for identification.
+ */
 function PaginationItem({ ...props }: React.ComponentProps<"li">) {
   return <li data-slot="pagination-item" {...props} />
 }
@@ -42,6 +57,15 @@ type PaginationLinkProps = {
 } & Pick<React.ComponentProps<typeof Button>, "size"> &
   React.ComponentProps<"a">
 
+/**
+ * Renders a styled pagination link with active state and accessibility attributes.
+ *
+ * Applies button-like styling and sets `aria-current="page"` when active for accessibility. The link's appearance changes based on its active state and size.
+ *
+ * @param isActive - Whether the link represents the current page
+ * @param size - The size variant of the link button (default is "icon")
+ * @returns An anchor element styled as a pagination link
+ */
 function PaginationLink({
   className,
   isActive,
@@ -65,6 +89,11 @@ function PaginationLink({
   )
 }
 
+/**
+ * Renders a pagination link styled as a "Previous" button with a left chevron icon.
+ *
+ * Displays the "Previous" label on small screens and larger for accessibility.
+ */
 function PaginationPrevious({
   className,
   ...props
@@ -82,6 +111,11 @@ function PaginationPrevious({
   )
 }
 
+/**
+ * Renders a pagination link styled as a "Next" button with an icon and accessible label.
+ *
+ * Displays a right chevron icon and the text "Next" (visible on larger screens), and sets appropriate ARIA attributes for accessibility.
+ */
 function PaginationNext({
   className,
   ...props
@@ -99,6 +133,11 @@ function PaginationNext({
   )
 }
 
+/**
+ * Renders an ellipsis indicator for skipped pagination pages.
+ *
+ * Displays a horizontal "more" icon and includes screen-reader-only text for accessibility.
+ */
 function PaginationEllipsis({
   className,
   ...props

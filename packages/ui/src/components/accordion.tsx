@@ -6,12 +6,20 @@ import { ChevronDownIcon } from "lucide-react"
 
 import { cn } from "@workspace/ui/lib/utils"
 
+/**
+ * Renders the root container for an accordion interface, forwarding all props to the underlying Radix Accordion primitive.
+ */
 function Accordion({
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Root>) {
   return <AccordionPrimitive.Root data-slot="accordion" {...props} />
 }
 
+/**
+ * Renders a styled accordion item with a bottom border, except for the last item.
+ *
+ * Accepts all props supported by the underlying Radix AccordionPrimitive.Item component.
+ */
 function AccordionItem({
   className,
   ...props
@@ -25,6 +33,12 @@ function AccordionItem({
   )
 }
 
+/**
+ * Renders a styled accordion trigger button with a rotating chevron icon, used to toggle the visibility of an accordion item's content.
+ *
+ * @param className - Additional class names to customize the trigger's appearance
+ * @param children - The content displayed inside the trigger button
+ */
 function AccordionTrigger({
   className,
   children,
@@ -47,6 +61,11 @@ function AccordionTrigger({
   )
 }
 
+/**
+ * Displays the collapsible content area of an accordion item with open and close animations.
+ *
+ * Wraps the Radix AccordionPrimitive.Content component, applying animation and padding styles to its children.
+ */
 function AccordionContent({
   className,
   children,

@@ -5,30 +5,49 @@ import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cn } from "@workspace/ui/lib/utils"
 
+/**
+ * Provides the root container for a Drawer UI element, extending the underlying DrawerPrimitive.Root with a slot identifier.
+ */
 function Drawer({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) {
   return <DrawerPrimitive.Root data-slot="drawer" {...props} />
 }
 
+/**
+ * A trigger component that opens or closes the Drawer when interacted with.
+ *
+ * Wraps the underlying DrawerPrimitive.Trigger and adds a `data-slot="drawer-trigger"` attribute for slot identification.
+ */
 function DrawerTrigger({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Trigger>) {
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />
 }
 
+/**
+ * Renders the portal container for the Drawer, enabling the Drawer content to be rendered outside the DOM hierarchy of its parent.
+ */
 function DrawerPortal({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Portal>) {
   return <DrawerPrimitive.Portal data-slot="drawer-portal" {...props} />
 }
 
+/**
+ * A wrapper component for the Drawer close button, forwarding all props and adding a slot identifier.
+ */
 function DrawerClose({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Close>) {
   return <DrawerPrimitive.Close data-slot="drawer-close" {...props} />
 }
 
+/**
+ * Renders a styled overlay behind the drawer, applying fade-in and fade-out animations based on the drawer's state.
+ *
+ * The overlay covers the entire viewport and dims the background when the drawer is open.
+ */
 function DrawerOverlay({
   className,
   ...props
@@ -45,6 +64,14 @@ function DrawerOverlay({
   )
 }
 
+/**
+ * Renders the main content area of the drawer, including overlay and direction-based styling.
+ *
+ * Wraps the drawer content inside a portal and overlay, applying conditional positioning, sizing, and border styles based on the drawer's direction (top, bottom, left, right). Also includes a decorative handle when the drawer opens from the bottom.
+ *
+ * @param className - Additional CSS classes to apply to the content container
+ * @param children - Elements to render inside the drawer content area
+ */
 function DrawerContent({
   className,
   children,
@@ -72,6 +99,11 @@ function DrawerContent({
   )
 }
 
+/**
+ * Renders the header section of a drawer with appropriate styling and alignment based on drawer direction.
+ *
+ * Applies conditional text alignment for top and bottom drawers and includes padding and spacing for layout consistency.
+ */
 function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -85,6 +117,11 @@ function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Renders the footer section of a drawer with vertical layout and spacing.
+ *
+ * Applies consistent padding and gap between child elements, and positions the footer at the bottom of the drawer content area.
+ */
 function DrawerFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -95,6 +132,11 @@ function DrawerFooter({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Renders a styled title for the drawer, forwarding all props to the underlying primitive.
+ *
+ * Applies font and color styling and adds a data attribute for slot identification.
+ */
 function DrawerTitle({
   className,
   ...props
@@ -108,6 +150,9 @@ function DrawerTitle({
   )
 }
 
+/**
+ * Renders a styled description section within the drawer, applying muted text styling and a slot data attribute.
+ */
 function DrawerDescription({
   className,
   ...props
