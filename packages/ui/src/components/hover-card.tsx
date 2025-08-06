@@ -5,12 +5,20 @@ import * as HoverCardPrimitive from "@radix-ui/react-hover-card"
 
 import { cn } from "@workspace/ui/lib/utils"
 
+/**
+ * Provides a wrapper for the Radix UI HoverCard root component, enabling hover-based card interactions.
+ *
+ * All received props are forwarded to the underlying Radix primitive, and a `data-slot="hover-card"` attribute is added for slot identification.
+ */
 function HoverCard({
   ...props
 }: React.ComponentProps<typeof HoverCardPrimitive.Root>) {
   return <HoverCardPrimitive.Root data-slot="hover-card" {...props} />
 }
 
+/**
+ * Renders a trigger element for the hover card, forwarding all props to the underlying Radix UI primitive and adding a slot identifier.
+ */
 function HoverCardTrigger({
   ...props
 }: React.ComponentProps<typeof HoverCardPrimitive.Trigger>) {
@@ -19,6 +27,15 @@ function HoverCardTrigger({
   )
 }
 
+/**
+ * Displays the content of a hover card in a styled, animated popover.
+ *
+ * Renders the hover card content inside a portal with customizable alignment, offset, and additional class names. The content is styled and animated based on its state and position.
+ *
+ * @param className - Additional CSS classes to apply to the content container
+ * @param align - Horizontal alignment of the content relative to the trigger (defaults to "center")
+ * @param sideOffset - Offset distance from the trigger element (defaults to 4)
+ */
 function HoverCardContent({
   className,
   align = "center",

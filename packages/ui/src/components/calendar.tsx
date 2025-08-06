@@ -11,6 +11,14 @@ import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker"
 import { cn } from "@workspace/ui/lib/utils"
 import { Button, buttonVariants } from "@workspace/ui/components/button"
 
+/**
+ * Renders a customizable calendar component based on `react-day-picker`, with enhanced styling and custom subcomponents.
+ *
+ * Supports custom class names, navigation button variants, flexible caption layouts, and overrides for formatters and internal components. Integrates with RTL layouts and provides custom rendering for day buttons and week numbers.
+ *
+ * @param buttonVariant - Optional variant for navigation buttons, controlling their visual style.
+ * @returns A styled calendar component with advanced customization options.
+ */
 function Calendar({
   className,
   classNames,
@@ -172,6 +180,11 @@ function Calendar({
   )
 }
 
+/**
+ * Renders a styled calendar day button with selection and range state indicators.
+ *
+ * Applies conditional styling and data attributes based on day selection, range position, and focus state. Focuses the button when the day is focused in the calendar.
+ */
 function CalendarDayButton({
   className,
   day,
