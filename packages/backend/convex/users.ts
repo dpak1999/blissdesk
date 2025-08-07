@@ -21,8 +21,6 @@ export const add = mutation({
       throw new Error("Unauthorized: Organization ID is missing");
     }
 
-    throw new Error("This is a test error");
-
     const userId = await ctx.db.insert("users", {
       name: "Deepak new",
     });
