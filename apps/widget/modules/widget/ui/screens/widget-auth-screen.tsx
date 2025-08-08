@@ -11,6 +11,9 @@ import {
 } from "@workspace/ui/components/form";
 import { Input } from "@workspace/ui/components/input";
 import { Button } from "@workspace/ui/components/button";
+import { useMutation } from "convex/react";
+import { api } from "@workspace/backend/_generated/api";
+import { Doc } from "@workspace/backend/_generated/dataModel";
 
 const formSchema = z.object({
   name: z.string().min(1, "Please enter your name"),
@@ -18,6 +21,8 @@ const formSchema = z.object({
 });
 
 export const WidgetAuthScreen = () => {
+  const organizationId = "org_12345"; // Replace with actual organization ID from state
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -26,8 +31,35 @@ export const WidgetAuthScreen = () => {
     },
   });
 
+  const createContactSession = useMutation(api.public.contactSessions.create);
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    if (!organizationId) {
+      return;
+    }
+
+    const metadata: Doc<"contactSessions">["metadata"] = {
+      userAgent: navigator.userAgent,
+      language: navigator.language,
+      languages: navigator.languages.join(","),
+      vendor: navigator.vendor,
+      platform: navigator.platform,
+      screenResolution: `${screen.width}x${screen.height}`,
+      viewPortSize: `${window.innerWidth}x${window.innerHeight}`,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timezoneOffset: new Date().getTimezoneOffset(),
+      cookieEnabled: navigator.cookieEnabled,
+      refferer: document.referrer || "direct",
+      currentUrl: window.location.href,
+    };
+
+    const contactSessionId = await createContactSession({
+      ...values,
+      organizationId,
+      metadata,
+    });
+
+    console.log(contactSessionId);
   };
 
   return (

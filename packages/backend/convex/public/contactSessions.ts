@@ -8,7 +8,7 @@ export const create = mutation({
     name: v.string(),
     email: v.string(),
     organizationId: v.string(),
-    expiresAt: v.number(),
+    expiresAt: v.optional(v.number()),
     metadata: v.optional(
       v.object({
         userAgent: v.optional(v.string()),
