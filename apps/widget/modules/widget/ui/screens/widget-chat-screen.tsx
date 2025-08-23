@@ -1,19 +1,56 @@
 "use client";
 
+import { Button } from "@workspace/ui/components/button";
 import { WidgetHeader } from "../components/widget-header";
+import { ArrowLeftIcon, MenuIcon } from "lucide-react";
+import { useAtomValue, useSetAtom } from "jotai";
+import {
+  contactSessionIdAtomFamily,
+  conversationIdAtom,
+  organizationIdAtom,
+  screenAtom,
+} from "../../atoms/widget-atoms";
+import { useQuery } from "convex/react";
+import { api } from "@workspace/backend/_generated/api";
 
 export const WidgetChatScreen = () => {
+  const conversationId = useAtomValue(conversationIdAtom);
+  const organizationId = useAtomValue(organizationIdAtom);
+  const setScreen = useSetAtom(screenAtom);
+  const setConversationId = useSetAtom(conversationIdAtom);
+  const contactSessionId = useAtomValue(
+    contactSessionIdAtomFamily(organizationId || "")
+  );
+
+  const conversation = useQuery(
+    api.public.conversations.getOne,
+    conversationId && contactSessionId
+      ? { conversationId, contactSessionId }
+      : "skip"
+  );
+
+  const onBack = () => {
+    setConversationId(null);
+    setScreen("selection");
+  };
+
   return (
     <>
-      <WidgetHeader>
-        <div className="flex flex-col justify-between gap-y-2 px-2 py-6 font-semibold">
-          <p className="text-3xl">Hi there! 👋🏻👋🏻</p>
-          <p className="text-lg">Let's get you started</p>
+      <WidgetHeader classname="flex items-center justify-between">
+        <div className="flex items-center gap-x-2">
+          <Button onClick={onBack} size={"icon"} variant={"transparent"}>
+            <ArrowLeftIcon />
+          </Button>
+          <p>Chat</p>
         </div>
+
+        <Button size={"icon"} variant={"transparent"}>
+          <MenuIcon />
+        </Button>
       </WidgetHeader>
 
       <div className="flex flex-1 flex-col gap-y-4 p-4">
-        <p className="text-sm">Chat screen</p>
+        {JSON.stringify(conversation, null, 4)}
       </div>
     </>
   );
