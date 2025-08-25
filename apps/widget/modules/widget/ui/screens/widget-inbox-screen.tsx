@@ -14,6 +14,7 @@ import {
 import { usePaginatedQuery } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
 import { formatDistanceToNow } from "date-fns";
+import { ConversationStatusIcon } from "@workspace/ui/components/conversation-status-icon";
 
 export const WidgetInboxScreen = () => {
   const setScreen = useSetAtom(screenAtom);
@@ -69,6 +70,7 @@ export const WidgetInboxScreen = () => {
                   <p className="truncate text-sm">
                     {conversation.lastMessage?.text}
                   </p>
+                  <ConversationStatusIcon status={conversation.status} />
                 </div>
               </div>
             </Button>
