@@ -35,6 +35,7 @@ import {
 } from "@workspace/ui/components/ai/input";
 import { UseInfiniteScroll } from "@workspace/ui/hooks/use-infinite-scroll";
 import { InfiniteScrollTrigger } from "@workspace/ui/components/infinite-scroll-trigger";
+import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
 
 const formSchema = z.object({
   message: z.string().min(1, "Please type a message"),
@@ -134,7 +135,15 @@ export const WidgetChatScreen = () => {
                 <AIMessageContent>
                   <AIResponse color="red">{message.content}</AIResponse>
                 </AIMessageContent>
-                {/* TODO : add avatar */}
+
+                {message.role === "assistant" && (
+                  <DicebearAvatar
+                    imageUrl=""
+                    seed="assistant"
+                    size={32}
+                    badgeImageUrl="/logo.svg"
+                  />
+                )}
               </AIMessage>
             );
           })}
