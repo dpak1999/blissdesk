@@ -15,6 +15,8 @@ import { usePaginatedQuery } from "convex/react";
 import { api } from "@workspace/backend/_generated/api";
 import { formatDistanceToNow } from "date-fns";
 import { ConversationStatusIcon } from "@workspace/ui/components/conversation-status-icon";
+import { UseInfiniteScroll } from "@workspace/ui/hooks/use-infinite-scroll";
+import { InfiniteScrollTrigger } from "@workspace/ui/components/infinite-scroll-trigger";
 
 export const WidgetInboxScreen = () => {
   const setScreen = useSetAtom(screenAtom);
@@ -30,6 +32,13 @@ export const WidgetInboxScreen = () => {
     contactSessionId ? { contactSessionId } : "skip",
     { initialNumItems: 10 }
   );
+
+  const { topElementRef, handleLoadMore, canLoadMore, isLoadingMore } =
+    UseInfiniteScroll({
+      status: conversations.status,
+      loadMore: conversations.loadMore,
+      loadSize: 10,
+    });
 
   return (
     <>
@@ -76,7 +85,12 @@ export const WidgetInboxScreen = () => {
             </Button>
           ))}
       </div>
-
+      <InfiniteScrollTrigger
+        canLoadMore={canLoadMore}
+        isLoadingMore={isLoadingMore}
+        onLoadMore={handleLoadMore}
+        ref={topElementRef}
+      />
       <WidgetFooter />
     </>
   );
