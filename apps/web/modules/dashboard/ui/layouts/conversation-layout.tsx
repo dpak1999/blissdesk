@@ -4,6 +4,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@workspace/ui/components/resizable";
+import { ConversationsPanel } from "../components/conversations-panel";
 
 export const ConversationLayout = async ({
   children,
@@ -13,7 +14,7 @@ export const ConversationLayout = async ({
   return (
     <ResizablePanelGroup className="h-full flex-1" direction="horizontal">
       <ResizablePanel defaultSize={30} maxSize={30} minSize={20}>
-        <p>Conversations!!</p>
+        <ConversationsPanel />
       </ResizablePanel>
       <ResizableHandle />
       <ResizablePanel className="h-full" defaultSize={70}>
