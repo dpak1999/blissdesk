@@ -3,7 +3,7 @@
 import { api } from "@workspace/backend/_generated/api";
 import { Id } from "@workspace/backend/_generated/dataModel";
 import { Button } from "@workspace/ui/components/button";
-import { useMutation, useQuery } from "convex/react";
+import { useAction, useMutation, useQuery } from "convex/react";
 import { MoreHorizontalIcon, Wand2Icon } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -44,6 +44,7 @@ export const ConversationsIdView = ({
   conversationId: Id<"conversations">;
 }) => {
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  const [enhancing, setEnhancing] = useState(false);
 
   const conversation = useQuery(api.private.conversations.getOne, {
     conversationId,
@@ -68,6 +69,22 @@ export const ConversationsIdView = ({
       message: "",
     },
   });
+
+  const enhanceResponse = useAction(api.private.messages.enhanceResponse);
+  const handleEnhanceResponse = async () => {
+    setEnhancing(true);
+    try {
+      const response = await enhanceResponse({
+        prompt: form.getValues("message"),
+      });
+
+      form.setValue("message", response);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setEnhancing(false);
+    }
+  };
 
   const createMessage = useMutation(api.private.messages.create);
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -175,7 +192,8 @@ export const ConversationsIdView = ({
                   }
                   disabled={
                     conversation?.status === "resolved" ||
-                    form.formState.isSubmitting
+                    form.formState.isSubmitting ||
+                    enhancing
                   }
                   value={field.value}
                   onChange={field.onChange}
@@ -190,9 +208,16 @@ export const ConversationsIdView = ({
             />
             <AIInputToolbar>
               <AIInputTools>
-                <AIInputButton disabled={conversation?.status === "resolved"}>
+                <AIInputButton
+                  onClick={handleEnhanceResponse}
+                  disabled={
+                    conversation?.status === "resolved" ||
+                    enhancing ||
+                    !form.formState.isValid
+                  }
+                >
                   <Wand2Icon />
-                  Enhance
+                  {enhancing ? "Enhancing message" : "Enhance"}
                 </AIInputButton>
               </AIInputTools>
               <AIInputSubmit
