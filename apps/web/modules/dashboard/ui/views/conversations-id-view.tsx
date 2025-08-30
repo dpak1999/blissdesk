@@ -31,6 +31,8 @@ import {
 import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
 import { ConversationStatusButton } from "../components/conversations-status-button";
 import { useState } from "react";
+import { UseInfiniteScroll } from "@workspace/ui/hooks/use-infinite-scroll";
+import { InfiniteScrollTrigger } from "@workspace/ui/components/infinite-scroll-trigger";
 
 const formSchema = z.object({
   message: z.string().min(1, "Please type a message"),
@@ -52,6 +54,13 @@ export const ConversationsIdView = ({
     conversation?.threadId ? { threadId: conversation.threadId } : "skip",
     { initialNumItems: 10 }
   );
+
+  const { canLoadMore, handleLoadMore, isLoadingMore, topElementRef } =
+    UseInfiniteScroll({
+      status: messages.status,
+      loadMore: messages.loadMore,
+      loadSize: 10,
+    });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -118,6 +127,12 @@ export const ConversationsIdView = ({
 
       <AIConversation className="max-h-[calc(100vh-180px)]">
         <AIConversationContent>
+          <InfiniteScrollTrigger
+            canLoadMore={canLoadMore}
+            isLoadingMore={isLoadingMore}
+            onLoadMore={handleLoadMore}
+            ref={topElementRef}
+          />
           {toUIMessages(messages.results ?? [])?.map((message) => {
             return (
               <AIMessage
