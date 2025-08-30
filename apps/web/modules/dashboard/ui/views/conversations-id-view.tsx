@@ -245,7 +245,7 @@ export const ConversationsIdView = ({
 
 export const ConversationsIdViewLoading = () => {
   return (
-    <div className="fle h-full flex-col bg-muted">
+    <div className="flex h-full flex-col bg-muted">
       <header className="flex border-b p-2.5 bg-background items-center justify-between">
         <Button disabled size={"sm"} variant={"ghost"}>
           <MoreHorizontalIcon />
