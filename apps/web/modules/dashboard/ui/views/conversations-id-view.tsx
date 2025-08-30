@@ -14,7 +14,6 @@ import {
   AIConversationContent,
   AIConversationScrollButton,
 } from "@workspace/ui/components/ai/conversation";
-import { InfiniteScrollTrigger } from "@workspace/ui/components/infinite-scroll-trigger";
 import {
   AIMessage,
   AIMessageContent,
@@ -30,6 +29,8 @@ import {
   AIInputTools,
 } from "@workspace/ui/components/ai/input";
 import { DicebearAvatar } from "@workspace/ui/components/dicebear-avatar";
+import { ConversationStatusButton } from "../components/conversations-status-button";
+import { useState } from "react";
 
 const formSchema = z.object({
   message: z.string().min(1, "Please type a message"),
@@ -40,6 +41,8 @@ export const ConversationsIdView = ({
 }: {
   conversationId: Id<"conversations">;
 }) => {
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+
   const conversation = useQuery(api.private.conversations.getOne, {
     conversationId,
   });
@@ -70,22 +73,51 @@ export const ConversationsIdView = ({
     }
   };
 
+  const updateStatus = useMutation(api.private.conversations.updateStatus);
+  const handleToggleStatus = async () => {
+    if (!conversation) {
+      return;
+    }
+
+    let newStatus: "unresolved" | "escalated" | "resolved";
+    setIsUpdatingStatus(true);
+    if (conversation.status === "unresolved") {
+      newStatus = "escalated";
+    } else if (conversation.status === "escalated") {
+      newStatus = "resolved";
+    } else {
+      newStatus = "unresolved";
+    }
+
+    try {
+      await updateStatus({
+        conversationId,
+        status: newStatus,
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsUpdatingStatus(false);
+    }
+  };
+
   return (
     <div className="flex h-full flex-col bg-muted">
       <header className="flex border-b p-2.5 bg-background items-center justify-between">
         <Button size={"sm"} variant={"ghost"}>
           <MoreHorizontalIcon />
         </Button>
+        {conversation && (
+          <ConversationStatusButton
+            onClick={handleToggleStatus}
+            status={conversation?.status}
+            disabled={isUpdatingStatus}
+          />
+        )}
       </header>
 
       <AIConversation className="max-h-[calc(100vh-180px)]">
         <AIConversationContent>
-          {/* <InfiniteScrollTrigger
-            canLoadMore={canLoadMore}
-            isLoadingMore={isLoadingMore}
-            ref={topElementRef}
-            onLoadMore={handleLoadMore}
-          /> */}
           {toUIMessages(messages.results ?? [])?.map((message) => {
             return (
               <AIMessage
@@ -143,7 +175,7 @@ export const ConversationsIdView = ({
             />
             <AIInputToolbar>
               <AIInputTools>
-                <AIInputButton>
+                <AIInputButton disabled={conversation?.status === "resolved"}>
                   <Wand2Icon />
                   Enhance
                 </AIInputButton>
