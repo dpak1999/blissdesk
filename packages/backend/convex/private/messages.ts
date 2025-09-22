@@ -78,17 +78,17 @@ export const create = mutation({
       });
     }
 
-    if (conversation.status === "resolved") {
-      throw new ConvexError({
-        code: "BAD_REQUEST",
-        message: "Conversation resolved",
-      });
-    }
-
     if (conversation.organizationId !== orgId) {
       throw new ConvexError({
         code: "UNAUTHORIZED",
         message: "Invalid organization id",
+      });
+    }
+
+    if (conversation.status === "resolved") {
+      throw new ConvexError({
+        code: "BAD_REQUEST",
+        message: "Conversation resolved",
       });
     }
 
