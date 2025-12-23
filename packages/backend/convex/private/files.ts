@@ -1,5 +1,5 @@
 import { ConvexError, v } from "convex/values";
-import { action, mutation, QueryCtx, } from "../_generated/server";
+import { action, mutation, query, QueryCtx, } from "../_generated/server";
 import {
   contentHashFromArrayBuffer,
   Entry,
@@ -136,7 +136,7 @@ export const addFile = action({
   },
 });
 
-export const list = action({
+export const list = query({
   args: {
     category: v.optional(v.string()),
     paginationOpts: paginationOptsValidator
@@ -173,7 +173,6 @@ export const list = action({
     });
 
     const files = await Promise.all(
-      // @ts-ignore
       results.page.map(entry => converEntryToPublicFile(ctx, entry))
     )
 
